@@ -68,6 +68,7 @@ function createCsv(req, res) {
 	
 	result.on('error', error => console.error('MY ERROR', error));
 	result.on('done', csv => console.log('file saved', CSV));
+	_jsonResponse(res,data);
 }
 
 /**
@@ -75,7 +76,7 @@ function createCsv(req, res) {
  * @param {Object} req
  * @param {Object} res
  */
-function create(req, res){
+function create(req, res) {
 	let body = '';
 	req.on('data', chuck => body += chuck);
 	req.on('end', () => {
@@ -144,7 +145,6 @@ function createStyles(req, res){
  * @param {Object} res
  */
 function update(req, res){
-	console.log('update car');
 	let body = '';
 	
 	req.on('data', chuck => body += chuck);
@@ -220,12 +220,22 @@ function _findCar(id, getIdx = false){
 		return getIdx ? idx : null;
 	}
 	
-	// find the car to delete
+	// Find the car to delete
 	data.records.forEach((car, index) => {
-		if(car.id === +id) idx = index;
+			console.log('Type of ID',typeof(id));
+			console.log('ID value',id);
+			console.log('Type of Car ID ',typeof(car.id));			
+			console.log('Car ID value',car.id);	
+			// Cuando se guarda guarda car.id como un 'Number' asi que la condicional si sucede
+			//	Al ser editado guarda car.id como un 'String' entonces la condicional no sucede		
+		if(car.id === +id) {
+			console.log('When it matches',id);
+			idx = index;
+		}
 	});
 	
 	if(getIdx) return idx;
+	
 	return data[idx];
 }
 

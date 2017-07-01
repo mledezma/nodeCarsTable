@@ -146,6 +146,9 @@
 			form[0].price.value = car.price;
 			form[0].color.value = car.color;
 			form[0].styleCar.value = car.styleCar;
+
+			// Shows the container form
+			$('#carFormContainer').removeClass('hidden');
 		});
 		return button
 	}
@@ -209,9 +212,10 @@
 		exportCsv.on('click', function () {
 			$.ajax({
 				url: BASE_URL+'/csv',
-				type: 'POST',
-			})
-			alert('The CSV has been saved'); //Dudas no funca con el then dunno why	
+				type: 'POST'
+			}).then(function(){
+				alert('The CSV has been saved');
+			},_logError);
 		});
 	}
 	
