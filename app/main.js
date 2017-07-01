@@ -70,31 +70,12 @@
 	 * @private
 	 */
 	function _composeStylesInput(data) {
-		console.log(data);
-
-		// // there are no cars
-		// if(!data.total){
-		// 	select.append($('<tr><th colspan="8" class="text-center">There are no cars.</th></tr>'));
-		// 	return table.append(select);
-		// }
-		
-		// // create the tds for echa car
-		// data.records.forEach(function(car) {
-		// 	var tr = $('<tr></tr>');
-		// 	tr.append($('<th>#'+car.id+'</th>'));
-		// 	tr.append($('<td>'+car.model+'</td>'));
-		// 	tr.append($('<td>'+car.brand+'</td>'));
-		// 	tr.append($('<td>'+car.year+'</td>'));
-		// 	tr.append($('<td>'+car.price+'</td>'));
-		// 	tr.append($('<td>'+car.color+'</td>'));
-		// 	tr.append($('<td>'+car.styleCar+'</td>'));
-		// 	var actions = $('<td width="150px"></td>');
-		// 	actions.append(_composeEditButton(car));
-		// 	actions.append(_composeDeleteButton(car));
-		// 	tr.append(actions);
-		// 	tbody.append(tr);
-		// });
-		// table.append(tbody);
+		select.html('');
+		data.records.forEach(function(style) {
+			var option = $('<option></option>');
+			option.text(style.name);
+			select.append(option);
+		});
 	}
 
 	/**
@@ -224,23 +205,14 @@
 		);
 	}
 
-	function _composeBtnCsv(data) {
+	function _composeBtnCsv() {
 		exportCsv.on('click', function () {
-			if(!data) {
 			$.ajax({
-				url: BASE_URL+'/car',
-				type: 'CSV',
-				// dataType: 'json'
-			}).then(_loadData, _logError);
-			}
-			else {
-				_loadData(data);
-			}
+				url: BASE_URL+'/csv',
+				type: 'POST',
+			})
+			alert('The CSV has been saved'); //Dudas no funca con el then dunno why	
 		});
-	}
-
-	function _loadData(data) {
-		console.log(data.records)
 	}
 	
 	/**
@@ -251,7 +223,22 @@
 	function _logError(error){
 		console.error(error);
 	}
-	
+
+	/**
+	 * Simple method to toggle the visibility
+	 * @private
+	 */
+	function _toggleVisibility(){
+		$('#btn-carForm').on('click', function(){
+			$('#carStyleContainer').addClass('hidden');
+			$('#carFormContainer').removeClass('hidden');	
+		});
+		$('#btn-carStyle').on('click', function(){
+			$('#carFormContainer').addClass('hidden');
+			$('#carStyleContainer').removeClass('hidden');			
+		});
+	}
+
 	/**
 	 * Starts the app
 	 * @private
@@ -264,7 +251,8 @@
 		select = $('#styleCar');
 		_loadTable();
 		_composeBtnCsv();
-		
+		_updateSelect();
+		_toggleVisibility();
 		form.on('submit', _submitForm);
 		styleForm.on('submit', _submitStyleForm);
 	}

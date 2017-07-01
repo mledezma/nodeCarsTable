@@ -1,15 +1,16 @@
 {
   "name": "frontendapp",
   "version": "0.0.1",
-  "description": "Frontend app for the server ",
+  "description": "Frontend app homework from the server",
   "main": "index.html",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [
-    "app"
+    "app",
+    "homework"
   ],
-  "author": "Andrey Alfaro <andreyalfaro@gmail.com>",
+  "author": "Marco Ledezma <marcoledezmacordero09@gmail.com>",
   "license": "ISC",
   "dependencies": {
     "jquery": "^3.2.1"

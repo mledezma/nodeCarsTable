@@ -11,7 +11,7 @@ module.exports = {
  * @param  {Array} data      Array with the data to convert to csv
  * @return {EventEmitter}    Event
  */
-function create(filename, data){
+function create(filename, data) {
 	let event = new EventEmitter();
 
 	// Mocked csv content
@@ -24,8 +24,8 @@ function create(filename, data){
 	// Write the csv file
 	fs.writeFile(filename, csv, error => {
 		if(error) event.emit('error', error);
-		event.emit('done','\n',csv);
 	});
-
+	
+	event.emit('done','\n',csv);
 	return event;
 }

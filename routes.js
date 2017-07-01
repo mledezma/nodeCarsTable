@@ -34,11 +34,11 @@ const ROUTES = [
 		method: 'DELETE',
 		controller: cars.remove
 	},
-	// {
-	// 	url: '/car',
-	// 	method: 'CSV',
-	// 	controller: cars.createCSV
-	// },
+	{
+		url: '/csv',
+		method: 'POST',
+		controller: cars.createCsv
+	},
 	{
 		url: '/carStyles',
 		method: 'POST',
@@ -67,7 +67,7 @@ module.exports = (req, res) => {
 	ROUTES.forEach(r => {
 		if(r.url === req.url && r.method === req.method)
 			route = r;
+			
 	});
-	
 	return route.controller(req, res);
 };

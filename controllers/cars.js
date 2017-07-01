@@ -21,7 +21,8 @@ module.exports = {
 	update,
 	remove,
 	options,
-	createStyles
+	createStyles,
+	createCsv
 };
 
 /**
@@ -56,14 +57,14 @@ function getStyles(req, res) {
 
 function createCsv(req, res) {
 	let data = '';
-	data = require(PATH)
-	console.log(data)
+	try {
+		data = require(PATH);
+	}catch (err) {
+		data = DEFAULT_DATA;
+	}
 	
-	// compose the filename for the csv
-	let filename = CSVPATH;
-	
-	// save the csv data into the myCsv.csv file
-	var result = CSV.create(filename, data);
+	// Save the csv data into the myCsv.csv file
+	var result = CSV.create(CSVPATH, data);
 	
 	result.on('error', error => console.error('MY ERROR', error));
 	result.on('done', csv => console.log('file saved', CSV));
